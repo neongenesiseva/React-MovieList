@@ -6,7 +6,6 @@ import React from 'react';
 //   Text,
 //   View
 // } from 'react-native';
-import $ from 'jquery';
 
 class ListOpt extends React.Component{
 
@@ -30,7 +29,7 @@ class ListOpt extends React.Component{
     return(
       <div className="row">
           <div className="col-lg-5">
-            <img src={`https://image.tmdb.org/t/p/w500${this.props.value.backdrop_path}`}/>
+            <img src={`https://image.tmdb.org/t/p/w500${this.props.value.backdrop_path}`} alt={this.props.value.title}/>
           </div>
           <div className="col-lg-7">
             <p>{this.props.value.original_title}</p>

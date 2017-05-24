@@ -122,25 +122,26 @@ class App extends Component {
     let tempB = this.state.likeList.slice(0);
     if (temp.indexOf(dataFromChild) === -1){
 
-    temp.push(dataFromChild);
+      temp.push(dataFromChild);
 
-    this.setState({likeListKey:temp});
+      this.setState({likeListKey:temp});
 
-    for (let ele of tempA){
-      if (ele.id == dataFromChild){
-        tempB.push(ele);
-      }
-    };
+      for (let ele of tempA){
+        if (ele.id === dataFromChild){
+          tempB.push(ele);
+        }
+      };
 
-    this.setState({likeList:tempB});
+      this.setState({likeList:tempB});
 
-    console.log(this.state.likeList);
+      console.log(this.state.likeList);
   } else {
     let location = temp.indexOf(dataFromChild);
     temp.splice(location,1);
     tempB.splice(location,1);
     this.setState({likeListKey:temp});
     this.setState({likeList:tempB});
+    this.setState({json:tempB});
   }
   }
 
@@ -148,8 +149,14 @@ class App extends Component {
   toggleLike(event){
     event.preventDefault();
     let eventName = event.target.getAttribute('data-id');
-    let temp = this.state[eventName];
-    this.setState({json:temp});
+    if (eventName === "likeList" && this.state.likeList.length === 0){
+      $('#text').html("<b>Your Like List Is Empty!</b>");
+      this.setState({json:[]});
+      } else {
+      $('#text').html("");
+      let temp = this.state[eventName];
+      this.setState({json:temp});
+      }
   }
 
   render() {
@@ -165,6 +172,7 @@ class App extends Component {
         <form id="request">
           <input className="btn btn-primary" type="submit" onClick={this.handleShift} value="GO TO"/><input type="text" ref={(input) => { this.textInput = input; }}/>
         </form>
+        <div id="text"></div>
           {
             this.state.json.map((value,i)=>(<ListOpt value={value} key={i} passData={this.myCallback} likeListKey={this.state.likeListKey}/>))
           }
